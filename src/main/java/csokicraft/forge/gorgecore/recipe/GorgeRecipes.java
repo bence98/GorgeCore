@@ -10,6 +10,8 @@ public class GorgeRecipes{
 	public static final GorgeRecipes inst=new GorgeRecipes();
 	
 	public void register(ItemStack in, ItemStack out){
+		if(in==null||out==null)
+			throw new NullPointerException("GorgeCore couldn't load recipe: input/output was null!");
 		if(getRecipe(in)!=null)
 			throw new RuntimeException("GorgeCore couldn't load recipe: Duplicate input: "+in);
 		recipes.add(new GorgeRecipe(in, out));
