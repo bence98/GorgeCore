@@ -4,3 +4,14 @@ chat.gorgecore.bonemeal=The wishbone breaks and you're left with some semi-fine 
 chat.gorgecore.nothing=The wishbone breaks into tiny pieces that fall onto the floor
 chat.gorgecore.damage=The wishbone breaks into splinters that hurt your fingers
 chat.gorgecore.gold=Your wishes have been answered!
+
+commands.gorgecore.norecipe=No recipe named %s!
+commands.gorgecore.removed=Recipe %s removed!
+commands.gorgecore.duplicate=Recipe %s already exists! Use '/gorgecore edit' to replace it
+commands.gorgecore.empty=Missing items from recipe %s, it won't be saved.
+commands.gorgecore.saved=Recipe %s saved!
+commands.gorgecore.error=Recipe %s could not be saved!
+commands.gorgecore.save_error=Recipes could not be saved!
+commands.gorgecore.load_error=Recipes could not be reloaded!
+commands.gorgecore.save_done=Recipes saved!
+commands.gorgecore.load_done=Recipes reloaded!

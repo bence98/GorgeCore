@@ -25,7 +25,10 @@ public class RecipeLoader implements Closeable{
 	
 	public RecipeLoader(File f) throws FileNotFoundException{
 		this(new FileInputStream(f));
-		name=f.getAbsolutePath();
+		name=f.getName();
+		int x=name.lastIndexOf('.');
+		if(x>0)
+			name=name.substring(0, x);
 	}
 	
 	public void addRecipe(){
@@ -43,7 +46,7 @@ public class RecipeLoader implements Closeable{
 					
 					ItemStack inStack=ItemStack.loadItemStackFromNBT(inNbt);
 					ItemStack outStack=ItemStack.loadItemStackFromNBT(outNbt);
-					GorgeRecipes.inst.register(inStack, outStack);
+					GorgeRecipes.inst.register(inStack, outStack, name);
 				} catch (Exception e){
 					throw new IllegalStateException(toString()+"->parse failed, "+e.getMessage(), e);
 				}
