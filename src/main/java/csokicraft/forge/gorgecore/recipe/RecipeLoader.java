@@ -44,8 +44,8 @@ public class RecipeLoader implements Closeable{
 					NBTTagCompound inNbt=NBTtoJSON.toNBT(inEl.getAsJsonObject());
 					NBTTagCompound outNbt=NBTtoJSON.toNBT(outEl.getAsJsonObject());
 					
-					ItemStack inStack=ItemStack.loadItemStackFromNBT(inNbt);
-					ItemStack outStack=ItemStack.loadItemStackFromNBT(outNbt);
+					ItemStack inStack=new ItemStack(inNbt);
+					ItemStack outStack=new ItemStack(outNbt);
 					GorgeRecipes.inst.register(inStack, outStack, name);
 				} catch (Exception e){
 					throw new IllegalStateException(toString()+"->parse failed, "+e.getMessage(), e);

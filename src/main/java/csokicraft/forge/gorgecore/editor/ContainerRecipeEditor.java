@@ -45,7 +45,7 @@ public class ContainerRecipeEditor extends Container{
 		ItemStack out=inv.getStackInSlot(1);
 		
 		if(in==null||out==null){
-			playerIn.addChatComponentMessage(new TextComponentString(I18n.format("commands.gorgecore.empty", name)));
+			playerIn.sendMessage(new TextComponentString(I18n.format("commands.gorgecore.empty", name)));
 			return;
 		}
 		
@@ -54,9 +54,9 @@ public class ContainerRecipeEditor extends Container{
 		try {
 			GorgeRecipes.inst.register(in, out, name);
 			GorgeCore.inst.saveRecipes();
-			playerIn.addChatComponentMessage(new TextComponentString(I18n.format("commands.gorgecore.saved", name)));
+			playerIn.sendMessage(new TextComponentString(I18n.format("commands.gorgecore.saved", name)));
 		} catch (Exception e){
-			playerIn.addChatComponentMessage(new TextComponentString(I18n.format("commands.gorgecore.error", name)));
+			playerIn.sendMessage(new TextComponentString(I18n.format("commands.gorgecore.error", name)));
 			e.printStackTrace();
 		}
 	}

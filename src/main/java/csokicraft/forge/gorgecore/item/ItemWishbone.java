@@ -1,6 +1,6 @@
 package csokicraft.forge.gorgecore.item;
 
-import csokicraft.util.mcforge.UtilMcForge10;
+import csokicraft.util.mcforge.UtilMcForge11;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,28 +20,29 @@ public class ItemWishbone extends Item {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		ItemStack itemStackIn=playerIn.getHeldItem(handIn);
 		if(!worldIn.isRemote){
-			itemStackIn.stackSize--;
+			itemStackIn.setCount(itemStackIn.getCount()-1);
 			
 			int x=worldIn.rand.nextInt(100);
 			if(x<25){
 				sendChatTranslated(playerIn, "chat.gorgecore.bonemeal");
-				UtilMcForge10.giveItemStack(playerIn, new ItemStack(Items.DYE, 1, 15));
+				UtilMcForge11.giveItemStack(playerIn, new ItemStack(Items.DYE, 1, 15));
 			}else if(x<65){
 				sendChatTranslated(playerIn, "chat.gorgecore.nothing");
 			}else if(x<90){
 				sendChatTranslated(playerIn, "chat.gorgecore.damage");
-				playerIn.attackEntityFrom(DamageSource.cactus, 2);
+				playerIn.attackEntityFrom(DamageSource.CACTUS, 2);
 			}else{
 				sendChatTranslated(playerIn, "chat.gorgecore.gold");
-				UtilMcForge10.giveItemStack(playerIn, new ItemStack(Items.GOLD_INGOT));
+				UtilMcForge11.giveItemStack(playerIn, new ItemStack(Items.GOLD_INGOT));
 			}
 		}
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemStackIn);
 	}
 	
 	private static void sendChatTranslated(EntityPlayer p, String s){
-		p.addChatComponentMessage(new TextComponentString(I18n.format(s)));
+		p.sendMessage(new TextComponentString(I18n.format(s)));
 	}
 }

@@ -5,13 +5,15 @@ import java.io.*;
 import csokicraft.forge.gorgecore.editor.CommandGorgeCore;
 import csokicraft.forge.gorgecore.item.ItemWishbone;
 import csokicraft.forge.gorgecore.recipe.*;
-import csokicraft.util.mcforge.UtilMcForge10;
+import csokicraft.util.mcforge.UtilMcForge11;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +23,7 @@ import net.minecraftforge.fml.common.event.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod(modid = GorgeCore.MODID, version = GorgeCore.VERSION, dependencies="required-after: csokicraftutil@1.3.1")
 @EventBusSubscriber
@@ -48,7 +51,6 @@ public class GorgeCore
     @EventHandler
     public void init(FMLInitializationEvent event) throws IOException
     {
-        GameRegistry.register(wishbone);
         proxy.registerModels();
         NetworkRegistry.INSTANCE.registerGuiHandler(inst, proxy);
     	if(!cfgDir.exists()){
@@ -100,10 +102,21 @@ public class GorgeCore
     	if(!ent.getEntityWorld().isRemote&&ent instanceof EntityPlayer){
     		GorgeRecipe rec=GorgeRecipes.inst.getRecipe(evt.getItem());
     		if(rec!=null){
-    			UtilMcForge10.giveItemStack((EntityPlayer) ent, rec.getOutput());
+    			UtilMcForge11.giveItemStack((EntityPlayer) ent, rec.getOutput());
     		}
     	}
     }
+    
+    @SubscribeEvent
+    public static void registerItems(final RegistryEvent.Register<Item> event){
+    	IForgeRegistry<Item> registry=event.getRegistry();
+    	registry.register(wishbone);
+    }
+	
+	@SubscribeEvent
+	public static void loadModels(ModelRegistryEvent evt){
+		proxy.registerModels();
+	}
 
 	public void removeRecipe(String name){
 		GorgeRecipe rec=GorgeRecipes.inst.getRecipe(name);

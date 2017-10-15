@@ -19,16 +19,16 @@ public class CommandGorgeCore extends CommandBase{
 
 	@Override
 	public int compareTo(ICommand arg0){
-		return arg0.getCommandName().compareTo(getCommandName());
+		return arg0.getName().compareTo(getName());
 	}
 
 	@Override
-	public String getCommandName(){
+	public String getName(){
 		return "gorgecore";
 	}
 
 	@Override
-	public String getCommandUsage(ICommandSender sender){
+	public String getUsage(ICommandSender sender){
 		return "gorgecore (add|edit|delete <recipe_name>) | (save|reload)";
 	}
 
@@ -43,17 +43,17 @@ public class CommandGorgeCore extends CommandBase{
 		switch(args[0]){
 		case "add":
 			if(args.length<2)
-				throw new WrongUsageException(getCommandUsage(sender));
+				throw new WrongUsageException(getUsage(sender));
 			addRecipe(sender, p, args[1]);
 			break;
 		case "edit":
 			if(args.length<2)
-				throw new WrongUsageException(getCommandUsage(sender));
+				throw new WrongUsageException(getUsage(sender));
 			editRecipe(sender, p, args[1]);
 			break;
 		case "delete":
 			if(args.length<2)
-				throw new WrongUsageException(getCommandUsage(sender));
+				throw new WrongUsageException(getUsage(sender));
 			deleteRecipe(sender, p, args[1]);
 			break;
 		case "save":
@@ -105,7 +105,7 @@ public class CommandGorgeCore extends CommandBase{
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos){
+	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
 		if(args.length==1){
 			if(args[0].length()==0){
 				return CollectionUtils.fromArray(new String[]{"add", "edit", "delete"});
@@ -126,6 +126,6 @@ public class CommandGorgeCore extends CommandBase{
 			Set<String> names=GorgeRecipes.inst.getNames();
 			return names.stream().filter(x -> (x.startsWith(args[1]))).collect(Collectors.toList());
 		}
-		return super.getTabCompletionOptions(server, sender, args, pos);
+		return super.getTabCompletions(server, sender, args, pos);
 	}
 }
